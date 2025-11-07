@@ -23,19 +23,19 @@ struct App {
 };
 
 struct Chip8 {
-	uint8_t v[NUM_GP_REGS]; /* General purpose registers V0 to VF */
-	uint16_t pc;		/* Program counter */
-	uint8_t sp;		/* Stack pointer */
-	uint16_t I;		/* Index register */
-	uint8_t opCode;		/* Operation code */
-	uint8_t ram[RAM_SIZE];	/* 4KB RAM */
+	uint8_t v[NUM_GP_REGS];	    /* General purpose registers V0 to VF */
+	uint16_t pc;		    /* Program counter */
+	uint8_t sp;		    /* Stack pointer */
+	uint16_t I;		    /* Index register */
+	uint8_t opCode;		    /* Operation code */
+	uint8_t ram[RAM_SIZE];	    /* 4KB RAM */
 	uint16_t stack[STACK_SIZE]; /* Stack... */
 	uint8_t delayTimer; /* Counts down at 60Hz until reaching zero */
 	uint8_t soundTimer; /* Counts down at 60Hz until reaching zero */
 	bool display[DISPLAY_WIDTH][DISPLAY_HEIGHT];
-	bool displayDirty; /* Control flag */
-	bool clearDisplay; /* Control flag */
-	union Keyboard keyboard; /* Map of keypresses */
+	bool displayDirty;   /* Control flag */
+	bool clearDisplay;   /* Control flag */
+	Keyboard_t keyboard; /* Map of keypresses */
 };
 
 uint8_t chip8Fontset[FONTSET_SIZE] = {
@@ -302,8 +302,6 @@ void EmulateCycle(struct Chip8 *chip8)
 					chip8->display[vx + i][vy + n] =
 						!chip8->display[vx + i][vy + n];
 				}
-				// chip8->display[vx + i][vy + n] =
-				// 	(rowData << i) & 0x80u;
 			}
 			n++;
 		}
